@@ -1,8 +1,20 @@
 version: 2.1
 
 jobs:
-  build:
+  job1:
     docker:
       - image: cimg/base:2022.05  
     steps:
-      - run: echo "Testing run command!"
+      - run: echo "Job 1 running!"
+     
+  job2:
+    docker:
+      - image: cimg/base:2022.05  
+    steps:
+      - run: echo "Job to running!"
+      
+workflow:
+    test_workflow:
+        jobs:
+            - job1
+            - job2
