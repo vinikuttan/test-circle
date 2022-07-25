@@ -13,7 +13,7 @@ jobs:
     steps:
       - run: echo "Job to running!"
       
-workflow:
+workflows:
     test_workflow:
         jobs:
             - job1
