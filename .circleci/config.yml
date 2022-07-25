@@ -5,7 +5,9 @@ jobs:
     docker:
       - image: cimg/base:2022.05  
     steps:
-      - run: echo "Job 1 running!"
+      - run:
+         name: Echo output
+         command: echo "job1 printing" 
      
   job2:
     docker:
