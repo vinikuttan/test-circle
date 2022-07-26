@@ -21,3 +21,6 @@ workflows:
         jobs:
             - job1
             - job12
+    test_worfklow1:
+        jobs:
+            - job1
