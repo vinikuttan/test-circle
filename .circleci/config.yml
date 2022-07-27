@@ -18,7 +18,7 @@ jobs:
              pip install -r requirements.txt
              cp -f .circleci/resources/pytest_build_config.ini pytest.ini
              shopt -s globstar
-             TESTFILES=$(circleci tests glob tests/**/test*.py | circleci tests split --split-by=timings)
+             TESTFILES=$(circleci tests glob **/tests.py | circleci tests split --split-by=timings)
              mkdir -p test-results
              shopt -u globstar
              pytest --junitxml=test-results/junit.xml $TESTFILES
