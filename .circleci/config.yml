@@ -17,7 +17,7 @@ jobs:
              source .venv/bin/activate
              pip install -r requirements.txt
              cp -f .circleci/resources/pytest_build_config.ini pytest.ini
-             TESTFILES=$(circleci tests glob **/tests.py | circleci tests split --split-by=timings)
+             TESTFILES=$(circleci tests glob tests/**/tests.py | circleci tests split --split-by=timings)
              echo $TESTFILES
              mkdir -p test-results
              pytest --junitxml=test-results/junit.xml $TESTFILES
