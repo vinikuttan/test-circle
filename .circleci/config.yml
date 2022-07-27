@@ -12,7 +12,7 @@ jobs:
       - run:
          name: Run django test
          command: |
-           TESTFILES=$(circleci tests glob "catalog/tests/*.py")
+           TESTFILES=$(circleci tests glob "catalog/tests/*.py" | sed 's/\S\+__init__.py//g')
            echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
            cat circleci_test_files.txt
            TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
