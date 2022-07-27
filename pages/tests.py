@@ -49,6 +49,8 @@ class SimpleTest(unittest.TestCase):
         time.sleep(3)
         self.assertTrue(True)
         
+        
+class SimpleTest1(unittest.TestCase):
     def test_12(self):
         time.sleep(3)
         self.assertTrue(True)
