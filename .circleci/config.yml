@@ -5,6 +5,7 @@ orbs:
 jobs:
   job1:
     executor: python/default
+    parallelism: 2
     steps:
       - checkout
       - python/install-packages:
