@@ -9,7 +9,6 @@ jobs:
       - run:
          name: Run django test
          command: python -m unittest discover
-
 workflows:
     test_workflow:
         jobs:
