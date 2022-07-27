@@ -13,4 +13,4 @@ class HomePageView(View):
 
 class AboutPageView(View):
     def get(self, request, *args, **kwargs):
-        return JsonResponse({'message': 'About successfull'})
+        return JsonResponse({'message': 'About successfull!'})
