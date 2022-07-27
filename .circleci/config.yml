@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   job1:
     docker:
-      - image: cimg/base:2022.05  
+      - image: python/default  
     steps:
       - checkout
       - run:
