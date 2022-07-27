@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+         name: Dependency installation
+         command: pip install coverage
+      - run:
          name: Run django test
          command: coverage run manage.py test
 
