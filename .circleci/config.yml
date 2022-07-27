@@ -4,24 +4,24 @@ orbs:
 
 jobs:
   job1:
-    executor: python/default
+    docker: 
+        - image: python:3.7
     parallelism: 4
     steps:
       - checkout
-      - python/install-packages:
-         pkg-manager: pip
       - run:
-         name: Run django test
+         name: Run test
          command: |
-           TESTFILES=$(circleci tests glob "catalog/tests/*.py" | sed 's/\S\+__init__.py//g')
-           echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
-           cat circleci_test_files.txt
-           TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
-           TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/\.py$//g')
-           echo $TESTFILES
-           mkdir -p test-results
-           coverage run -m unittest $TESTFILES
-
+             pip install virtualenv
+             virtualenv .venv
+             source .venv/bin/activate
+             pip install -r requirements.txt
+             cp -f .circleci/resources/pytest_build_config.ini pytest.ini
+             shopt -s globstar
+             TESTFILES=$(circleci tests glob tests/**/test*.py | circleci tests split --split-by=timings)
+             mkdir -p test-results
+             shopt -u globstar
+             pytest --junitxml=test-results/junit.xml $TESTFILES
       - store_test_results:
           path: test-results
       - store_artifacts:
