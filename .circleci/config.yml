@@ -19,7 +19,14 @@ jobs:
            TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
            TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/\.py$//g')
            echo $TESTFILES
+           mkdir -p test-results
            coverage run -m unittest $TESTFILES
+
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+
 workflows:
     test_workflow:
         jobs:
