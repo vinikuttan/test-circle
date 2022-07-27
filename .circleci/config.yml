@@ -11,7 +11,14 @@ jobs:
          pkg-manager: pip
       - run:
          name: Run django test
-         command: coverage run -m unittest discover
+         command: |
+           TESTFILES=$(circleci tests glob "catalog/tests/*.py")
+           echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
+           cat circleci_test_files.txt
+           TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
+           TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/\.py$//g')
+           echo $TESTFILES
+           coverage run -m unittest --verbosity=2 $TESTFILES
 workflows:
     test_workflow:
         jobs:
