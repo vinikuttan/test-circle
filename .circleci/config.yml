@@ -14,7 +14,8 @@ jobs:
              source .venv/bin/activate
              mkdir test-reports
              pip install -r requirements.txt
-             python -m pytest $(circleci tests glob "**/**/test*.py" | circleci tests split)
+             echo "$PWD"
+             python -m pytest $(circleci tests glob "**/**/tests.py" | circleci tests split)
       - store_test_results:
           path: test-reports
 
