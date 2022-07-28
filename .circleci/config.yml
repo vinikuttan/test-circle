@@ -15,15 +15,15 @@ jobs:
              pip install virtualenv
              virtualenv .venv
              source .venv/bin/activate
-             cd test-circle
              mkdir test-reports
              pip install -r requirements.txt
              TESTFILES=$(circleci tests glob "**/tests/**/test*.py" "**/tests.py" | circleci tests split --split-by=timings)
              pytest --rootdir="." --junitxml=test-reports/python/junit.xml $TESTFILES
       - store_test_results:
-          path: myapp/test-reports
+          path: test-reports
 
 workflows:
+    version: 2
     test_workflow:
         jobs:
             - job1
