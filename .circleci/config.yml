@@ -1,9 +1,6 @@
 version: 2.1
-orbs:
-  python: circleci/python@2.0.3
-
 jobs:
-  job1:
+  test:
     docker: 
         - image: python:3.7
     parallelism: 4
@@ -17,8 +14,8 @@ jobs:
              source .venv/bin/activate
              mkdir test-reports
              pip install -r requirements.txt
-             TESTFILES=$(circleci tests glob "**/tests/**/test*.py" "**/tests.py" | circleci tests split --split-by=timings)
-             pytest --rootdir="." --junitxml=test-reports/python/junit.xml $TESTFILES
+             TESTFILES=$(circleci tests glob tests/**/test*.py | circleci tests split --split-by=timings)
+             pytest $TESTFILES
       - store_test_results:
           path: test-reports
 
