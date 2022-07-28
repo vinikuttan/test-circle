@@ -17,7 +17,7 @@ jobs:
              echo "$PWD"
              echo "print"
              echo "$(ls)"
-             python -m pytest $(circleci tests glob "**/tests.py" | circleci tests split)
+             python -m pytest $(circleci tests glob "pages/tests.py" | circleci tests split)
              echo "$(ls)"
       - store_test_results:
           path: test-reports
