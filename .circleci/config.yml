@@ -15,6 +15,8 @@ jobs:
              mkdir test-reports
              pip install -r requirements.txt
              echo "$PWD"
+             echo "print"
+             echo "$(ls)"
              python -m pytest $(circleci tests glob "**/tests.py" | circleci tests split)
              echo "$(ls)"
       - store_test_results:
