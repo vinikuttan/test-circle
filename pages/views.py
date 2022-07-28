@@ -8,7 +8,7 @@ from django.views.generic import View
 
 class HomePageView(View):
     def get(self, request, *args, **kwargs):
-        return JsonResponse({'message': 'Home successfull!'})
+        return JsonResponse({'message': 'Home successfull!!'})
 
 
 class AboutPageView(View):
