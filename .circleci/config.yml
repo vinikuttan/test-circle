@@ -15,20 +15,13 @@ jobs:
              pip install virtualenv
              virtualenv .venv
              source .venv/bin/activate
-             mkdir ~/junit
+             cd test-circle
+             mkdir test-reports
              pip install -r requirements.txt
-             TESTFILES=$(circleci tests glob "pages/test*.py" | sed 's/\S\+__init__.py//g')
-             echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
-             cat circleci_test_files.txt
-             TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
-             TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/.py//g')
-             echo $TESTFILES
-             python manage.py test --verbosity=2 $TESTFILES
-      - run:
-          command: cp junit.xml ~/junit/
-          when: always
+             TESTFILES=$(circleci tests glob "**/tests/**/test*.py" "**/tests.py" | circleci tests split --split-by=timings)
+             pytest --rootdir="." --junitxml=test-reports/python/junit.xml $TESTFILES
       - store_test_results:
-          path: ~/junit
+          path: myapp/test-reports
 
 workflows:
     test_workflow:
