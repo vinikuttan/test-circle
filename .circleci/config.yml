@@ -16,11 +16,13 @@ jobs:
              virtualenv .venv
              source .venv/bin/activate
              pip install -r requirements.txt
-             cp -f .circleci/resources/pytest_build_config.ini pytest.ini
-             TESTFILES=$(circleci tests glob **/tests.py | circleci tests split --split-by=timings)
+             TESTFILES=$(circleci tests glob "pages/test*.py" | sed 's/\S\+__init__.py//g')
+             echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
+             cat circleci_test_files.txt
+             TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
+             TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/.py//g')
              echo $TESTFILES
-             mkdir -p test-results
-             pytest --junitxml=test-results/junit.xml $TESTFILES
+             python manage.py test --verbosity=2 $TESTFILES
       - store_test_results:
           path: test-results
       - store_artifacts:
