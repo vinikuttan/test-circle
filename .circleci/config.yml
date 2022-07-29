@@ -12,14 +12,12 @@ jobs:
              python3 -m venv venv
              . venv/bin/activate
              mkdir test-reports
-             pip3 install -r requirements.txt
-             echo "$PWD"
-             echo "$(ls **/tests.py)"
+             pip install -r requirements.txt
              TESTFILES=$(circleci tests glob "**/tests.py" | sed 's/\S\+__init__.py//g')
              echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
              TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
              TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/.py//g')
-             python3 manage.py unittest $TESTFILES
+             python manage.py test $TESTFILES
       - store_test_results:
           path: test-reports
 
