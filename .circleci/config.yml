@@ -15,10 +15,12 @@ jobs:
              mkdir test-reports
              pip install -r requirements.txt
              echo "$PWD"
-             echo "print"
              echo "$(ls)"
-             python manage.py test $(circleci tests glob "pages/tests.py" | circleci tests split)
-             echo "$(ls)"
+             TESTFILES=$(circleci tests glob "catalog/tests/*.py")
+             echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
+             TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
+             TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/.py//g')
+             python -m pytest $TESTFILES
       - store_test_results:
           path: test-reports
 
