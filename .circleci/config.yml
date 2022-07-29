@@ -17,7 +17,7 @@ jobs:
              echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
              TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
              TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/.py//g')
-             python manage.py test $TESTFILES
+             python manage.py test
       - store_test_results:
           path: test-reports
 
