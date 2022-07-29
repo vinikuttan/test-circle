@@ -9,17 +9,17 @@ jobs:
       - run:
          name: Run test
          command: |
-             python -m venv venv
-             source venv/bin/activate
+             python3 -m venv venv
+             . venv/bin/activate
              mkdir test-reports
-             pip install -r requirements.txt
+             pip3 install -r requirements.txt
              echo "$PWD"
              echo "$(ls **/tests.py)"
              TESTFILES=$(circleci tests glob "**/tests.py" | sed 's/\S\+__init__.py//g')
              echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
              TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
              TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/.py//g')
-             python manage.py test --verbosity=2 $TESTFILES
+             python3 manage.py test --verbosity=2 $TESTFILES
       - store_test_results:
           path: test-reports
 
