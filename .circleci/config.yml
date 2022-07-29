@@ -9,9 +9,8 @@ jobs:
       - run:
          name: Run test
          command: |
-             pip install virtualenv
-             virtualenv .venv
-             source .venv/bin/activate
+             python -m venv venv
+             source venv/bin/activate
              mkdir test-reports
              pip install -r requirements.txt
              echo "$PWD"
