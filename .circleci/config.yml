@@ -16,7 +16,7 @@ jobs:
              pip install -r requirements.txt
              echo "$PWD"
              echo "$(ls)"
-             TESTFILES=$(circleci tests glob "catalog/tests/*.py")
+             TESTFILES=$(circleci tests glob "**/tests.py")
              echo $TESTFILES | tr ' ' '\n' | sort | uniq > circleci_test_files.txt
              TESTFILES=$(circleci tests split --split-by=timings circleci_test_files.txt)
              TESTFILES=$(echo $TESTFILES | tr "/" "." | sed 's/.py//g')
